@@ -2,21 +2,21 @@
 ************************************************************
 * COMPILERS COURSE - Algonquin College
 * Code version: Fall, 2022
-* Author: Svillen Ranev - Paulo Sousa
+* Author: Svillen Ranev - Paulo Sousa, Hasibullah Yosufi
 * Professors: Paulo Sousa
 ************************************************************
- _________________________________
-|                                 |
-| ........ BOA LANGUAGE ......... |
-|     __    __    __    __        |
-|    /  \  /  \  /  \  /  \       |
-| __/  __\/  __\/  __\/  __\__    |
-| _/  /__/  /__/  /__/  /_____|   |
-|  \_/ \   / \   / \   / \  \___  |
-|       \_/   \_/   \_/   \___o_> |
-|                                 |
-| .. ALGONQUIN COLLEGE - 2022F .. |
-|_________________________________|
+ __________________________________
+|                                  |
+| ........ Hydra LANGUAGE .........|
+|     __    __    __    __         |
+|    /  \  /  \  /  \  /  \        |
+| __/  __\/  __\/  __\/  __\__     |
+| _/  /__/  /__/  /__/  /_____|    |
+|  \_/ \   / \   / \   / \  \___   |
+|       \_/   \_/   \_/   \___o_>  |
+|                                  |
+| .. ALGONQUIN COLLEGE - 2022F ..  |
+|_________________________________ |
 
 */
 
@@ -103,6 +103,8 @@ hdr_int mainReader(hdr_int argc, hdr_char** argv) {
 	hdr_char* input = argv[2];
 	hdr_char mode = MODE_FIXED;
 	hdr_int size = 0, increment = 0, wrongNumber = 0;
+
+	
 
 	/* Missing file name or/and mode parameter */
 	if (argc <= 2) {

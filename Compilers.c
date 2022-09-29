@@ -81,6 +81,8 @@ hdr_int main(int argc, char** argv) {
 		return EXIT_FAILURE;
 	}//end if
 
+	printf("%d",PGM_READER);
+
 	hdr_char option = argv[1][0];
 	switch (option) {
 	case PGM_READER:
@@ -127,9 +129,9 @@ hdr_void printLogo() {
 	printf("%s%s%s%s%s%s%s%s%s%s%s%s",
 		" _________________________________ \n",
 		"|                                 |\n",
-		"| ....... 'BOA' LANGUAGE ........ |\n",
+		"| ....... 'Hydra' LANGUAGE .......|\n",
 		"|     __    __    __    __        |\n",
-		"|    /  \\  /  \\  /  \\  /  \\       |\n",
+		"|    /  \\  /  \\  /  \\  /  \\   |\n",
 		"| __/  __\\/  __\\/  __\\/  __\\__    |\n",
 		"| _/  /__/  /__/  /__/  /_____|   |\n",
 		"|  \\_/ \\   / \\   / \\   / \\  \\___  |\n",
