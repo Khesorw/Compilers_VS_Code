@@ -83,11 +83,17 @@ enum READER_MODE {
 /* BITS                                (7654.3210) */
 #define READER_DEFAULT_FLAG 0x00 	/* (0000.0000)_2 = (000)_10 */
 /* TO_DO: BIT 3: FUL = Full */
-#define FUL 0x03
+#define HD_SET_FUL 0x07 //0000.0111
+#define HD_RST_FUL 0x08 //0000.1000
+#define HD_CHK_FUL 0x08 //0000.1000
 /* TO_DO: BIT 2: EMP: Empty */
-#define EMP 0x02
+#define HD_SET_EMP 0x03
+#define HD_RST_EMP 0x04
+#define HD_CHK_EMP 0x03
 /* TO_DO: BIT 1: REL = Relocation */
-#define REL 0x01
+#define HD_SET_REL 0x01
+#define HD_RST_REL 0x02
+#define HD_CHK_REL 0x01
 /* TO_DO: BIT 0: END = EndOfBuffer */
 #define END 0x00
  
