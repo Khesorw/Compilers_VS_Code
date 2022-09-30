@@ -53,7 +53,10 @@
 /* standard header files */
 #include <stdio.h>  /* standard input/output */
 #include <malloc.h> /* for dynamic memory allocation*/
+#include <stdlib.h>
 #include <limits.h> /* implementation-defined data type ranges and limits */
+
+
 
 /* CONSTANTS DEFINITION: GENERAL (NOT LANGUAGE DEPENDENT) .................................. */
 

@@ -81,7 +81,7 @@ hdr_int main(int argc, char** argv) {
 		return EXIT_FAILURE;
 	}//end if
 
-	printf("%d",PGM_READER);
+	
 
 	hdr_char option = argv[1][0];
 	switch (option) {

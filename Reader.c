@@ -87,6 +87,7 @@ ReaderPointer readerCreate(hdr_int size, hdr_int increment, hdr_int mode) {
 	readerPointer->increment = increment;
 	readerPointer->mode = mode;
 	/* TO_DO: Initialize flags */
+
 	/* TO_DO: The created flag must be signalized as EMP */
 	return readerPointer;
 }
@@ -112,10 +113,18 @@ ReaderPointer readerAddChar(ReaderPointer const readerPointer, hdr_char ch) {
 	hdr_char* tempReader = NULL;
 	hdr_int newSize = 0;
 	/* TO_DO: Defensive programming */
+	if(readerPointer == NULL )
+	{
+		return NULL;
+	}
 	/* TO_DO: Reset Realocation */
+	readerPointer->flags = REL;
+
+	
 	/* TO_DO: Test the inclusion of chars */
 	if (readerPointer->position.wrte * (hdr_int)sizeof(hdr_char) < readerPointer->size) {
 		/* TO_DO: This buffer is NOT full */
+
 	} else {
 		/* TO_DO: Reset Full flag */
 		switch (readerPointer->mode) {
@@ -140,7 +149,7 @@ ReaderPointer readerAddChar(ReaderPointer const readerPointer, hdr_char ch) {
 	readerPointer->content[readerPointer->position.wrte++] = ch;
 	/* TO_DO: Updates histogram */
 	return readerPointer;
-}
+}//readerAddChar()
 
 /*
 ***********************************************************
@@ -158,7 +167,15 @@ ReaderPointer readerAddChar(ReaderPointer const readerPointer, hdr_char ch) {
 */
 hdr_boln readerClear(ReaderPointer const readerPointer) {
 	/* TO_DO: Defensive programming */
+	if(readerPointer == NULL)
+	{
+		printf("Undefined memory"); 
+
+		exit(EXIT_FAILURE);
+	} 
+
 	/* TO_DO: Adjust flags original */
+	readerPointer->flags = READER_DEFAULT_FLAG;
 	return hdr__TRUE;
 }
 
@@ -500,6 +517,7 @@ hdr_int readerGetPosMark(ReaderPointer const readerPointer) {
 *************************************************************
 */
 hdr_int readerGetSize(ReaderPointer const readerPointer) {
+	
 	/* TO_DO: Defensive programming */
 	/* TO_DO: Return size */
 	return 0;
