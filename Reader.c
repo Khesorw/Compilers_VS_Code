@@ -387,7 +387,14 @@ hdr_int readerLoad(ReaderPointer const readerPointer, FILE* const fileDescriptor
 */
 hdr_boln readerRecover(ReaderPointer const readerPointer) {
 	/* TO_DO: Defensive programming */
+
+	if(!readerPointer)
+	{
+		printf("\nError in readerRevoer() \n");
+		return(hdr__FALSE);
+	}
 	/* TO_DO: Recover positions */
+	readerPointer->position.read = readerPointer->position.mark;
 	return hdr__TRUE;
 }
 
@@ -474,9 +481,13 @@ hdr_char readerGetChar(ReaderPointer const readerPointer) {
 *************************************************************
 */
 hdr_char* readerGetContent(ReaderPointer const readerPointer, hdr_int pos) {
+
 	/* TO_DO: Defensive programming */
+	if(!readerPointer || pos < 0) return NULL;
+
+
 	/* TO_DO: Return content (string) */
-	return NULL;
+	return readerPointer->content + pos;
 }
 
 
@@ -517,9 +528,19 @@ hdr_int readerGetPosRead(ReaderPointer const readerPointer) {
 *************************************************************
 */
 hdr_int readerGetPosWrte(ReaderPointer const readerPointer) {
+
 	/* TO_DO: Defensive programming */
+	if(!readerPointer)
+	 {
+
+		printf("\nerror in readerGetPosWrte() \n");
+		return (EXIT_FAILURE);
+	 }
+
+	
+
 	/* TO_DO: Return wrte */
-	return 0;
+	return readerPointer->position.wrte;
 }
 
 
@@ -561,6 +582,14 @@ hdr_int readerGetPosMark(ReaderPointer const readerPointer) {
 hdr_int readerGetSize(ReaderPointer const readerPointer) {
 	
 	/* TO_DO: Defensive programming */
+	if(!readerPointer) return (EXIT_FAILURE);
+	if(readerPointer->size > READER_MAX_SIZE || readerPointer->size <= 0)
+	{
+		printf("The size is bigger than max size: ;( %d\n",readerPointer->size);
+		return (EXIT_FAILURE);
+	}
+	return(readerPointer->size);
+
 	/* TO_DO: Return size */
 	return 0;
 }
@@ -581,8 +610,14 @@ hdr_int readerGetSize(ReaderPointer const readerPointer) {
 */
 hdr_int readerGetInc(ReaderPointer const readerPointer) {
 	/* TO_DO: Defensive programming */
+
+	if(!readerPointer)
+	{
+		printf("\nThe readerPointer is not initialized in memory on readerGetInc()\n");
+		return(EXIT_FAILURE);
+	}
 	/* TO_DO: Return increment */
-	return 0;
+	return readerPointer->increment;
 }
 
 /*
@@ -600,9 +635,20 @@ hdr_int readerGetInc(ReaderPointer const readerPointer) {
 *************************************************************
 */
 hdr_int readerGetMode(ReaderPointer const readerPointer) {
-	/* TO_DO: Defensive programming */
+	
+
+	if(!readerPointer)
+	{
+		printf("\nError in readerGetMode Function\nReaderPointer is null");
+		
+
+
+		return (EXIT_FAILURE);
+		
+	}
+
 	/* TO_DO: Return mode */
-	return 0;
+	return readerPointer->mode;
 }
 
 
@@ -622,8 +668,14 @@ hdr_int readerGetMode(ReaderPointer const readerPointer) {
 */
 hdr_byte readerGetFlags(ReaderPointer const readerPointer) {
 	/* TO_DO: Defensive programming */
+
+	if(!readerPointer)
+	{
+		printf("\nError in readerGetFlags() not initilazed pointer\n");
+		return(EXIT_FAILURE);
+	}
 	/* TO_DO: Return flags */
-	return 0;
+	return readerPointer->flags;
 }
 
 
@@ -643,6 +695,18 @@ hdr_byte readerGetFlags(ReaderPointer const readerPointer) {
 */
 hdr_int readerShowStat(ReaderPointer const readerPointer) {
 	/* TO_DO: Defensive programming */
+
+	if(!readerPointer)
+	{
+		printf("\nerror in readerShowStat ;(\n");
+		return(EXIT_FAILURE);
+	}
 	/* TO_DO: Updates the histogram */
-	return 0;
+	int temp = 0, i=0; 
+	for(; i < NCHAR;i++)
+	{
+		temp = temp + readerPointer->histogram[i];
+	}
+	
+	return temp;
 }
