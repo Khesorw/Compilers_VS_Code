@@ -74,19 +74,44 @@
 ReaderPointer readerCreate(hdr_int size, hdr_int increment, hdr_int mode) {
 	ReaderPointer readerPointer;
 	/* TO_DO: Defensive programming */
+	if(size > READER_MAX_SIZE) return NULL;
+	
+	if(size <= 0)
+	{
+		size = READER_DEFAULT_SIZE;
+		increment = READER_DEFAULT_INCREMENT;
+	}
+	
+	/* checking for the mode ascii a 109, m=102,a=97*/
+	hdr_int i;
+	if(mode != 109 && mode != 102 && mode != 97) return NULL;
+	if(increment <= 0 || size <= 0) return NULL;
+
 	/* TO_DO: Adjust the values according to parameters */
 	size = READER_DEFAULT_SIZE;
 	increment = READER_DEFAULT_INCREMENT;
-	mode = MODE_FIXED;
+
+    if (!mode)
+		mode = MODE_FIXED;
+
 	readerPointer = (ReaderPointer)calloc(1, sizeof(BufferReader));
 	/* TO_DO: Defensive programming */
+	if(!readerPointer) 
+		return NULL;
+
+
 	readerPointer->content = (hdr_char*)malloc(size);
+	if(!readerPointer->content) 
+		return NULL;
 	/* TO_DO: Defensive programming */
 	/* TO_DO: Initialize the histogram */
+	// Create a loop and put 0 in ALL positions of readerPointer->histogram[i] = 0
 	readerPointer->size = size;
 	readerPointer->increment = increment;
 	readerPointer->mode = mode;
 	/* TO_DO: Initialize flags */
+	readerPointer->flags = READER_DEFAULT_FLAG;
+	readerPointer->flags = readerPointer->flags | HD_SET_EMP; // is this correct? 
 
 	/* TO_DO: The created flag must be signalized as EMP */
 	return readerPointer;
@@ -117,8 +142,9 @@ ReaderPointer readerAddChar(ReaderPointer const readerPointer, hdr_char ch) {
 	{
 		return NULL;
 	}
+	if(ch < 0 || ch > 127) return NULL;
 	/* TO_DO: Reset Realocation */
-	readerPointer->flags = REL;
+	
 
 	
 	/* TO_DO: Test the inclusion of chars */
@@ -130,24 +156,36 @@ ReaderPointer readerAddChar(ReaderPointer const readerPointer, hdr_char ch) {
 		switch (readerPointer->mode) {
 		case MODE_FIXED:
 			return NULL;
+			break;
 		case MODE_ADDIT:
 			/* TO_DO: Adjust new size */
+			newSize = readerPointer->size + readerPointer->increment;
+			if(newSize <= 0 )return NULL;
 			/* TO_DO: Defensive programming */
 			break;
 		case MODE_MULTI:
 			/* TO_DO: Adjust new size */
+			newSize = readerPointer->size * readerPointer->increment;
+			if(newSize <= 0) return NULL;
 			/* TO_DO: Defensive programming */
 			break;
 		default:
 			return NULL;
 		}
 		/* TO_DO: New reader allocation */
+		tempReader = (char *)realloc(readerPointer->content,newSize);
+		if(!tempReader) return NULL;
+
+
+		readerPointer->size = newSize;
+		readerPointer->content = tempReader;
 		/* TO_DO: Defensive programming */
 		/* TO_DO: Check Relocation */
 	}
 	/* TO_DO: Add the char */
 	readerPointer->content[readerPointer->position.wrte++] = ch;
 	/* TO_DO: Updates histogram */
+	readerPointer->histogram[ch]++;
 	return readerPointer;
 }//readerAddChar()
 
@@ -171,10 +209,11 @@ hdr_boln readerClear(ReaderPointer const readerPointer) {
 	{
 		printf("Undefined memory"); 
 
-		exit(EXIT_FAILURE);
+		return hdr__FALSE;
 	} 
 
 	/* TO_DO: Adjust flags original */
+	//readerPointer->flags = HD_SET_REL;
 	readerPointer->flags = READER_DEFAULT_FLAG;
 	return hdr__TRUE;
 }
@@ -217,8 +256,11 @@ hdr_boln readerFree(ReaderPointer const readerPointer) {
 */
 hdr_boln readerIsFull(ReaderPointer const readerPointer) {
 	/* TO_DO: Defensive programming */
+	if(!readerPointer) return hdr__FALSE;
 	/* TO_DO: Check flag if buffer is FUL */
-	return hdr__FALSE;
+	readerPointer->flags = HD_SET_FUL;
+
+	return hdr__TRUE;
 }
 
 

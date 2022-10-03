@@ -118,7 +118,10 @@ hdr_int mainReader(hdr_int argc, hdr_char** argv) {
 	if (argc == 4) {
 		mode = *argv[3];
 		switch (mode) {
-		case MODE_FIXED: case MODE_ADDIT: case MODE_MULTI: break;
+		case MODE_FIXED: 
+		case MODE_ADDIT: 
+		case MODE_MULTI: 
+		break;
 		default:
 			bErrorPrint("%s%s%c%s%c%s%c%s", program, ": Wrong mode - choose: ",
 				MODE_FIXED, ", ", MODE_ADDIT, ", ", MODE_MULTI, ".");
@@ -126,11 +129,13 @@ hdr_int mainReader(hdr_int argc, hdr_char** argv) {
 		}
 	}
 	/* Read additional parameters, if any */
-	if (argc == 6) {
+	if (argc == 6) 
+	{
 		mode = *argv[3];
 		if (isNumber(argv[4]))size = (short)atoi(argv[4]); else wrongNumber = 1;
 		if (isNumber(argv[5]))increment = (short)atoi(argv[5]); else wrongNumber = 1;
-		if (wrongNumber) {
+		if (wrongNumber) 
+		{
 			bErrorPrint("\nDate: %s  Time: %s", __DATE__, __TIME__);
 			bErrorPrint("\nRuntime error at line %d in file %s\n", __LINE__, __FILE__);
 			bErrorPrint("%s\b\b\b\b%s", argv[0], ": Missing or wrong number parameters.");
@@ -143,7 +148,7 @@ hdr_int mainReader(hdr_int argc, hdr_char** argv) {
 
 	/* Return success */
 	return (EXIT_SUCCESS);
-}
+};
 
 /*
 ************************************************************

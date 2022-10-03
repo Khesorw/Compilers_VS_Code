@@ -79,21 +79,21 @@ enum READER_MODE {
 #define READER_DEFAULT_SIZE			250		/* default initial buffer reader capacity */
 #define READER_DEFAULT_INCREMENT	10		/* default increment factor */
 
-/* Add your bit-masks constant definitions here - Defined for BOA */
+/* Add your bit-masks constant definitions here - Defined for hydra */
 /* BITS                                (7654.3210) */
 #define READER_DEFAULT_FLAG 0x00 	/* (0000.0000)_2 = (000)_10 */
 /* TO_DO: BIT 3: FUL = Full */
-#define HD_SET_FUL 0x07 //0000.0111
-#define HD_RST_FUL 0x08 //0000.1000
+#define HD_SET_FUL 0x08 //0000.1000
+#define HD_RST_FUL 0xF7 //1111.0111
 #define HD_CHK_FUL 0x08 //0000.1000
 /* TO_DO: BIT 2: EMP: Empty */
-#define HD_SET_EMP 0x03
-#define HD_RST_EMP 0x04
-#define HD_CHK_EMP 0x03
+#define HD_SET_EMP 0x04 //0000.0100
+#define HD_RST_EMP 0xFB //1111.1011
+#define HD_CHK_EMP 0x04 //0000.0100
 /* TO_DO: BIT 1: REL = Relocation */
-#define HD_SET_REL 0x01
-#define HD_RST_REL 0x02
-#define HD_CHK_REL 0x01
+#define HD_SET_REL 0x01 //0000.0010
+#define HD_RST_REL 0x02 //1111.1101
+#define HD_CHK_REL 0x01 //0000.0010
 /* TO_DO: BIT 0: END = EndOfBuffer */
 #define END 0x00
  
@@ -105,6 +105,7 @@ enum READER_MODE {
 /* TODO: Adjust datatypes */
 
 /* Offset declaration */
+//is value for the mode
 typedef struct position {
 	hdr_int mark;			/* the offset to the mark position (in chars) */
 	hdr_int read;			/* the offset to the get a char position (in chars) */
