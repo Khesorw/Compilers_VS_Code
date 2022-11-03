@@ -69,7 +69,7 @@ hdr_int main(int argc, char** argv) {
 	 
 	hdr_int i;
 	printLogo();
-	argc = 3;
+	
 	if (DEBUG)
 	{
 		for (i = 0; i < argc; ++i)
@@ -84,8 +84,7 @@ hdr_int main(int argc, char** argv) {
 		return EXIT_FAILURE;
 	}//end if
 
-	argv[1] = "R";
-	argv[2] = "README.txt";
+	
 
 	hdr_char option = argv[1][0];
 	switch (option) {
