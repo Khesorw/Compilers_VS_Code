@@ -206,20 +206,22 @@ Language keywords
 */
 
 /* TO_DO: Define the number of Keywords from the language */
-#define KWT_SIZE 10
+#define KWT_SIZE 12
 
 /* TO_DO: Define the list of keywords */
 static hdr_char* keywordTable[KWT_SIZE] = {
-	"data",
-	"code",
+	"print",
+	"input",
 	"int",
-	"real",
 	"string",
+	"bit",
 	"if",
-	"then",
 	"else",
 	"while",
-	"do"
+	"for",
+	"break",
+	"return",
+	"def"
 };
 
 /* NEW SECTION: About indentation */

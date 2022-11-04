@@ -196,6 +196,9 @@ Token tokenizer(void) {
 				state = nextState(state, c);
 				pos++;
 			}
+
+			
+
 			if (stateType[state] == FSWR)
 				readerRetract(sourceBuffer);
 			lexEnd = readerGetPosRead(sourceBuffer);
@@ -205,6 +208,8 @@ Token tokenizer(void) {
 				fprintf(stderr, "Scanner error: Can not create buffer\n");
 				exit(1);
 			}
+
+
 			readerRestore(sourceBuffer);
 			for (i = 0; i < lexLength; i++)
 				readerAddChar(lexemeBuffer, readerGetChar(sourceBuffer));
