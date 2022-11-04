@@ -703,11 +703,18 @@ hdr_int readerShowStat(ReaderPointer const readerPointer) {
 	}
 	/* TO_DO: Updates the histogram */
 	int temp = 0, i=0; 
-	for(; i < NCHAR;i++)
+	
+	for(; i < NCHAR-1;i++)
 	{
-		if(readerPointer->histogram[i] == 0) continue;
+		if(i == 0 || i == 10 || i == 13) continue;
 		
-		temp = temp + readerPointer->histogram[i];
+		if(readerPointer->histogram[i] != 0) 
+		{
+			
+			temp++;
+		}
+
+		
 	}
 	
 	return temp;
