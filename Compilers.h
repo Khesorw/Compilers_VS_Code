@@ -52,8 +52,8 @@
  */
  
 /* Logical constants - adapt for your language */
-#define hdr__TRUE  1
-#define hdr__FALSE 0
+#define hdr_TRUE  1
+#define hdr_FALSE 0
 
 /*
 ------------------------------------------------------------
@@ -96,8 +96,8 @@ Main functions signatures
 */
 hdr_int mainReader  (hdr_int argc, hdr_char** argv);
 /*
-hdr__intg mainScanner (hdr__intg argc, hdr__char** argv);
-hdr__intg mainParser  (hdr__intg argc, hdr__char** argv);
+hdr_int mainScanner (hdr_int argc, hdr_char** argv);
+hdr_int mainParser  (hdr_int argc, hdr_char** argv);
 */
 hdr_void printLogo();
 

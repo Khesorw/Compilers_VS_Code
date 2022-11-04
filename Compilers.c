@@ -7,7 +7,7 @@
 ************************************************************
  _________________________________
 |                                 |
-| ........ BOA LANGUAGE ......... |
+| ........ hdr__ LANGUAGE ......... |
 |     __    __    __    __        |
 |    /  \  /  \  /  \  /  \       |
 | __/  __\/  __\/  __\/  __\__    |
@@ -88,17 +88,25 @@ hdr_int main(int argc, char** argv) {
 
 	hdr_char option = argv[1][0];
 	switch (option) {
+
+
+	/*	
 	case PGM_READER:
 		printf("%s%c%s", "\n[Option '", PGM_READER, "': Starting READER .....]\n\n");
 		
 		
 		mainReader(argc, argv);
 		break;
-	/*
+
+*/
+
+	
 	case PGM_SCANNER:
 		printf("%s%c%s", "\n[Option '", PGM_SCANNER, "': Starting SCANNER ....]\n\n");
 		mainScanner(argc, argv);
 		break;
+
+/*
 	case PGM_PARSER:
 		printf("%s%c%s", "\n[Option '", PGM_PARSER, "': Starting PARSER .....]\n\n");
 		mainParser(argc, argv);
@@ -128,7 +136,7 @@ hdr_int main(int argc, char** argv) {
 */
 hdr_void printLogo() {
 	/*
-	hdr__char* strLogo = " _________________________________\n|                                 |\n| ........ BOA LANGUAGE ......... |\n|     __    __    __    __        |\n|    /  \\  /  \\  /  \\  /  \\       |\n| __/  __\\/  __\\/  __\\/  __\\__    |\n| _/  /__/  /__/  /__/  /_____|   |\n|  \\_/ \\   / \\   / \\   / \\  \\___  |\n|       \\_/   \\_/   \\_/   \\___o_> |\n|                                 |\n| .. ALGONQUIN COLLEGE - 2022F .. |\n|_________________________________|\n";
+	hdr_char* strLogo = " _________________________________\n|                                 |\n| ........ hdr__ LANGUAGE ......... |\n|     __    __    __    __        |\n|    /  \\  /  \\  /  \\  /  \\       |\n| __/  __\\/  __\\/  __\\/  __\\__    |\n| _/  /__/  /__/  /__/  /_____|   |\n|  \\_/ \\   / \\   / \\   / \\  \\___  |\n|       \\_/   \\_/   \\_/   \\___o_> |\n|                                 |\n| .. ALGONQUIN COLLEGE - 2022F .. |\n|_________________________________|\n";
 	printf("%s", strLogo);
 	*/
 	printf("%s%s%s%s%s%s%s%s%s%s%s%s",

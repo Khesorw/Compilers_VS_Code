@@ -7,7 +7,7 @@
 ************************************************************
  _________________________________
 |                                 |
-| ........ BOA LANGUAGE ......... |
+| ........ hdr__ LANGUAGE ......... |
 |     __    __    __    __        |
 |    /  \  /  \  /  \  /  \       |
 | __/  __\/  __\/  __\/  __\__    |
@@ -209,13 +209,13 @@ hdr_boln readerClear(ReaderPointer const readerPointer) {
 	{
 		printf("Undefined memory"); 
 
-		return hdr__FALSE;
+		return hdr_FALSE;
 	} 
 
 	/* TO_DO: Adjust flags original */
 	//readerPointer->flags = HD_SET_REL;
 	readerPointer->flags = READER_DEFAULT_FLAG;
-	return hdr__TRUE;
+	return hdr_TRUE;
 }
 
 /*
@@ -235,9 +235,9 @@ hdr_boln readerClear(ReaderPointer const readerPointer) {
 hdr_boln readerFree(ReaderPointer const readerPointer) {
 	/* TO_DO: Defensive programming */
 	if (!readerPointer)
-		return hdr__FALSE;
+		return hdr_FALSE;
 	/* TO_DO: Free pointers */
-	return hdr__TRUE;
+	return hdr_TRUE;
 }
 
 /*
@@ -256,11 +256,11 @@ hdr_boln readerFree(ReaderPointer const readerPointer) {
 */
 hdr_boln readerIsFull(ReaderPointer const readerPointer) {
 	/* TO_DO: Defensive programming */
-	if(!readerPointer) return hdr__FALSE;
+	if(!readerPointer) return hdr_FALSE;
 	/* TO_DO: Check flag if buffer is FUL */
-	readerPointer->flags = HD_SET_FUL;
+	readerPointer->flags = HD_CHK_FUL;
 
-	return hdr__TRUE;
+	return hdr_TRUE;
 }
 
 
@@ -281,7 +281,7 @@ hdr_boln readerIsFull(ReaderPointer const readerPointer) {
 hdr_boln readerIsEmpty(ReaderPointer const readerPointer) {
 	/* TO_DO: Defensive programming */
 	/* TO_DO: Check flag if buffer is EMP */
-	return hdr__FALSE;
+	return hdr_FALSE;
 }
 
 /*
@@ -302,10 +302,10 @@ hdr_boln readerIsEmpty(ReaderPointer const readerPointer) {
 hdr_boln readerSetMark(ReaderPointer const readerPointer, hdr_int mark) {
 	/* TO_DO: Defensive programming */
 	if (!readerPointer || mark<0 || mark > readerPointer->position.wrte)
-		return hdr__FALSE;
+		return hdr_FALSE;
 	/* TO_DO: Adjust mark */
 	readerPointer->position.mark = mark;
-	return hdr__TRUE;
+	return hdr_TRUE;
 }
 
 
@@ -391,11 +391,11 @@ hdr_boln readerRecover(ReaderPointer const readerPointer) {
 	if(!readerPointer)
 	{
 		printf("\nError in readerRevoer() \n");
-		return(hdr__FALSE);
+		return(hdr_FALSE);
 	}
 	/* TO_DO: Recover positions */
 	readerPointer->position.read = readerPointer->position.mark;
-	return hdr__TRUE;
+	return hdr_TRUE;
 }
 
 
@@ -416,7 +416,7 @@ hdr_boln readerRecover(ReaderPointer const readerPointer) {
 hdr_boln readerRetract(ReaderPointer const readerPointer) {
 	/* TO_DO: Defensive programming */
 	/* TO_DO: Retract (return 1 pos read) */
-	return hdr__TRUE;
+	return hdr_TRUE;
 }
 
 
@@ -437,7 +437,7 @@ hdr_boln readerRetract(ReaderPointer const readerPointer) {
 hdr_boln readerRestore(ReaderPointer const readerPointer) {
 	/* TO_DO: Defensive programming */
 	/* TO_DO: Restore positions (read/mark) */
-	return hdr__TRUE;
+	return hdr_TRUE;
 }
 
 
@@ -705,6 +705,8 @@ hdr_int readerShowStat(ReaderPointer const readerPointer) {
 	int temp = 0, i=0; 
 	for(; i < NCHAR;i++)
 	{
+		if(readerPointer->histogram[i] == 0) continue;
+		
 		temp = temp + readerPointer->histogram[i];
 	}
 	

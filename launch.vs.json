@@ -5,8 +5,8 @@
     {
       "type": "default",
       "project": "CMakeLists.txt",
-      "projectTarget": "BoaCompiler.exe",
-      "name": "BoaCompiler.exe",
+      "projectTarget": "hdr__Compiler.exe",
+      "name": "hdr__Compiler.exe",
       "args": [
         "R",
         "README.txt"
