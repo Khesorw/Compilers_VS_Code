@@ -110,8 +110,8 @@ typedef struct Token {
 
 /* TO_DO: Define lexeme FIXED classes */
 /* These constants will be used on nextClass */
-#define CHRCOL2 '_'
-#define CHRCOL3 '&'
+#define CHRCOL2 '/#'
+#define CHRCOL5 ':'
 #define CHRCOL4 '\''
 
 /* These constants will be used on VID / MID function */
@@ -183,7 +183,7 @@ Token funcSL	(hdr_char lexeme[]);
 Token funcID	(hdr_char lexeme[]);
 Token funcKEY	(hdr_char lexeme[]);
 Token funcErr	(hdr_char lexeme[]);
-
+Token funIL		(hdr_char lexeme[]);
 /* 
  * Accepting function (action) callback table (array) definition 
  * If you do not want to use the typedef, the equvalent declaration is:
@@ -197,8 +197,12 @@ static PTR_ACCFUN finalStateTable[] = {
 	funcKEY,	/* KEY  [03] */
 	NULL,		/* -    [04] */
 	funcSL,		/* SL   [05] */
-	funcErr,	/* ERR1 [06] */
-	funcErr		/* ERR2 [07] */
+	null,				[06]
+	null,				[07]
+	null,				[08]
+	funIL,				[09]
+	funcErr,	/* ERR1 [10] */
+	funcErr		/* ERR2 [11] */
 };
 
 /*

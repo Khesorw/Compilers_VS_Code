@@ -163,11 +163,40 @@ Token tokenizer(void) {
 					readerRetract(sourceBuffer);
 					//return currentToken;
 				}
+				// else if (c == '\n') {
+				// 	line++;
+				// }
+				
+			} while (c != '\n' && c != CHARSEOF0 && c != CHARSEOF255);
+			break;
+
+		/*multi line comments of hydra */
+		case '/':
+		newc = readerGetChar(sourceBuffer);
+		if(newc == 35)
+		{
+			while(1)
+			{
+				newc = readerGetChar(sourceBuffer);
+				if (c == CHARSEOF0 || c == CHARSEOF255) {
+				
+					readerRetract(sourceBuffer);
+					
+				}
 				else if (c == '\n') {
 					line++;
 				}
-			} while (c != '#' && c != CHARSEOF0 && c != CHARSEOF255);
-			break;
+
+				if(newc == '#' && (newc = readerGetChar(sourceBuffer)) == '/')
+				{
+					break;
+				}
+
+			}
+
+
+		}
+		break;
 		/* Cases for END OF FILE */
 		case CHARSEOF0:
 			currentToken.code = SEOF_T;
@@ -286,15 +315,15 @@ hdr_int nextClass(hdr_char c) {
 	case CHRCOL2:
 		val = 2;
 		break;
-	case CHRCOL3:
-		val = 3;
+	case CHRCOL5:
+		val = 5;
 		break;
 	case CHRCOL4:
 		val = 4;
 		break;
 	case CHARSEOF0:
 	case CHARSEOF255:
-		val = 5;
+		val = 6;
 		break;
 	default:
 		if (isalpha(c))
@@ -302,7 +331,7 @@ hdr_int nextClass(hdr_char c) {
 		else if (isdigit(c))
 			val = 1;
 		else
-			val = 6;
+			val = 7;
 	}
 	return val;
 }
