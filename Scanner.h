@@ -54,7 +54,7 @@ enum TOKENS {
 	KW_T,		/*  7: Keyword token */
 	EOS_T,		/*  8: End of statement (semicolon) */
 	RTE_T,		/*  9: Run-time error token */
-	INL_T,		/* 10: Run-time error token */
+	INL_T,		/* 10: Integer-Leteral token */
 	SEOF_T		/* 11: Source end-of-file token */
 };
 
@@ -123,20 +123,22 @@ typedef struct Token {
 #define ESNR	102		/* Error state with no retract */
 
  /* TO_DO: State transition table definition */
-#define TABLE_COLUMNS 7
+#define TABLE_COLUMNS 9
 
 /* TO_DO: Transition table - type of states defined in separate table */
 static hdr_int transitionTable[][TABLE_COLUMNS] = {
-/*   [A-z] , [0-9],    _,    &,    ", SEOF, other
-	   L(0),  D(1), U(2), M(3), Q(4), E(5),  O(6) */
-	{     1,  ESNR, ESNR, ESNR,    4, ESWR, ESNR}, // S0: NOAS
-	{     1,     1,    1,    2, ESNR, ESWR,    3}, // S1: NOAS
-	{    FS,    FS,   FS,   FS,   FS,   FS,   FS}, // S2: ASNR (MVID)
-	{    FS,    FS,   FS,   FS,   FS,   FS,   FS}, // S3: ASWR (KEY)
-	{     4,     4,    4,    4,    5, ESWR,    4}, // S4: NOAS
-	{    FS,    FS,   FS,   FS,   FS,   FS,   FS}, // S5: ASNR (SL)
-	{    FS,    FS,   FS,   FS,   FS,   FS,   FS}, // S6: ASNR (ES)
-	{    FS,    FS,   FS,   FS,   FS,   FS,   FS}  // S7: ASWR (ER)
+/*   [A-z] , [0-9],    /#,    #/,    ", :,     other
+	   L(0),  D(1), CS(2), CE(3), Q(4), CO(5),  O(6) */
+	{     1,  8,    6,     ESNR,    4,   ESNR,  ESNR}, // S0: NOAS
+	{     1,  1,    ESWR,  ESWR, ESNR,    3,    2}, // S1: NOAS
+	{    FS,    FS,   FS,   FS,   FS,   FS,    FS}, // S2: ASNR (KEY)
+	{    FS,    FS,   FS,   FS,   FS,   FS,    FS}, // S3: ASWR (MVID)
+	{     4,     4,    4,    4,    5,    4,    4 }, // S4: NOAS[3]
+	{    FS,    FS,   FS,   FS,   FS,   FS,    FS}, // S5: SL (SL)
+	{    6,     6,     6,    7,    6,    6,    6}, // S6: NOAS[4] (ES)
+	{    FS,    FS,   FS,   FS,   FS,   FS,    FS},  // S7: MLTC (ER)
+	{    ESWR,	8,	  ESWR, ESWR, ESWR, ESWR,  ESWR	 }, //S8: NOAS[5]
+	{	   FS,	FS,	   FS,   FS,   FS,   FS,   FS} //S9: IL
 };
 
 /* Define accepting states types */

@@ -85,7 +85,6 @@ ReaderPointer readerCreate(hdr_int size, hdr_int increment, hdr_int mode) {
 	/* checking for the mode ascii a 109, m=102,a=97*/
 	hdr_int i;
 	if(mode != 109 && mode != 102 && mode != 97) return NULL;
-	if(increment <= 0 || size <= 0) return NULL;
 
 	/* TO_DO: Adjust the values according to parameters */
 	size = READER_DEFAULT_SIZE;
@@ -106,12 +105,21 @@ ReaderPointer readerCreate(hdr_int size, hdr_int increment, hdr_int mode) {
 	/* TO_DO: Defensive programming */
 	/* TO_DO: Initialize the histogram */
 	// Create a loop and put 0 in ALL positions of readerPointer->histogram[i] = 0
+
+	
+
+	for(int i = 0; i < 128; i++)
+	{
+		readerPointer->histogram[i] = 0;
+	}
+
 	readerPointer->size = size;
 	readerPointer->increment = increment;
 	readerPointer->mode = mode;
 	/* TO_DO: Initialize flags */
 	readerPointer->flags = READER_DEFAULT_FLAG;
-	readerPointer->flags = readerPointer->flags | HD_SET_EMP; // is this correct? 
+
+	//readerPointer->flags = readerPointer->flags | HD_SET_EMP; // is this correct? 
 
 	/* TO_DO: The created flag must be signalized as EMP */
 	return readerPointer;

@@ -89,7 +89,7 @@ hdr_void printToken(Token t);
 
 hdr_int mainScanner(hdr_int argc, hdr_char** argv) {
 
-	ReaderPointer sourceBuffer;		/* Pointer to input (source) buffer */
+	ReaderPointer sourceBuffer = NULL;		/* Pointer to input (source) buffer */
 	FILE* fileHandler;				/* Input file handle */
 	Token currentToken;				/* Token produced by the scanner */
 	hdr_int loadSize = 0;			/* The size of the file loaded in the buffer */
@@ -122,7 +122,9 @@ hdr_int mainScanner(hdr_int argc, hdr_char** argv) {
 
 	/* Load source file into input buffer  */
 	printf("Reading file %s ....Please wait\n", argv[2]);
+
 	loadSize = readerLoad(sourceBuffer, fileHandler);
+
 	if (loadSize == READER_ERROR)
 		printScannerError("%s%s", argv[0], ": Error in loading buffer.");
 
