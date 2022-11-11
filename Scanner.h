@@ -154,8 +154,12 @@ static hdr_int stateType[] = {
 	FSWR, /* 03 (KEY) */
 	NOFS, /* 04 */
 	FSNR, /* 05 (SL) */
-	FSNR, /* 06 (Err1 - no retract) */
-	FSWR  /* 07 (Err2 - retract) */
+	NOFS, /*06 */
+	FSNR, /*07 multi line comments*/
+	NOFS, /* 08 */
+	FSWR, /* 09 IL */
+	FSNR, /* 10 (Err1 - no retract) */
+	FSWR  /* 11 (Err2 - retract) */
 };
 
 /*
