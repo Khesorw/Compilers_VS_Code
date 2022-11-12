@@ -115,6 +115,7 @@ typedef struct Token {
 #define CHRCOL2 '#'
 #define CHRCOL5 ':'
 #define CHRCOL4 '\''
+#define CHARCOL4_2 '\"'
 
 /* These constants will be used on VID / MID function */
 #define MNIDPREFIX '&'

@@ -312,7 +312,7 @@ hdr_int nextState(hdr_int state, hdr_char c) {
  */
 /* TO_DO: Use your column configuration */
 
-/* Adjust the logic to return next column in TT */
+/* Adjust the logic to return next row in TT */
 /*	[A-z](0), [0-9](1),	_(2), &(3), "(4), SEOF(5), other(6) */
 
 hdr_int nextClass(hdr_char c) {
@@ -325,6 +325,7 @@ hdr_int nextClass(hdr_char c) {
 		val = 5;
 		break;
 	case CHRCOL4:
+	case CHARCOL4_2:
 		val = 4;
 		break;
 	case CHARSEOF0:
@@ -335,7 +336,7 @@ hdr_int nextClass(hdr_char c) {
 		if (isalpha(c))
 			val = 0;
 		else if (isdigit(c))
-			val = 1;
+			val = 6;
 		else
 			val = 7;
 	}
@@ -566,7 +567,7 @@ hdr_void printToken(Token t) {
 		printf("EOS_T\n");
 		break;
 	case ART_T:
-		printf("ART_T\t\t%s\n", t.attribute.arithmeticOperator);
+		printf("ART_T\t\t%d\n", t.attribute.arithmeticOperator);
 		break;
 	case VID_T:
 		printf("VID_T\t\t%s\n", t.attribute.idLexeme);

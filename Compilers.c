@@ -70,6 +70,8 @@ hdr_int main(int argc, char** argv) {
 	hdr_int i;
 	printLogo();
 	argc = 3;
+	argv[1] = "S";
+	argv[2] = "sam.hdr";
 	if (DEBUG)
 	{
 		for (i = 0; i < argc; ++i)
@@ -86,12 +88,12 @@ hdr_int main(int argc, char** argv) {
 
 	
 	argv[1] = "S";
-	argv[2] = "README.txt";
+	//argv[2] = "README.txt";
 	hdr_char option = argv[1][0];
 	switch (option) {
 
 
-	/*	
+		
 	case PGM_READER:
 		printf("%s%c%s", "\n[Option '", PGM_READER, "': Starting READER .....]\n\n");
 		
@@ -99,7 +101,7 @@ hdr_int main(int argc, char** argv) {
 		mainReader(argc, argv);
 		break;
 
-*/
+
 
 	
 	case PGM_SCANNER:
