@@ -163,11 +163,46 @@ Token tokenizer(void) {
 					readerRetract(sourceBuffer);
 					//return currentToken;
 				}
+				// else if (c == '\n') {
+				// 	line++;
+				// }
+				
+			} while (c != '\n' && c != CHARSEOF0 && c != CHARSEOF255);
+			break;
+
+		/*multi line comments of hydra */
+		case '/':
+
+		newc = readerGetChar(sourceBuffer);
+		if(newc == '#')
+		{
+			while(1)
+			{
+				newc = readerGetChar(sourceBuffer);
+				if (c == CHARSEOF0 || c == CHARSEOF255) {
+				
+					readerRetract(sourceBuffer);
+					
+				}
 				else if (c == '\n') {
 					line++;
 				}
-			} while (c != '#' && c != CHARSEOF0 && c != CHARSEOF255);
-			break;
+
+				if(newc == '#' && (newc = readerGetChar(sourceBuffer)) == '/')
+				{
+					break;
+				}
+
+			}
+
+
+		} else {
+			readerRetract(sourceBuffer);
+			currentToken.code = ART_T;
+			currentToken.attribute.arithmeticOperator = OP_DIV;
+			return currentToken;
+		}
+		break;
 		/* Cases for END OF FILE */
 		case CHARSEOF0:
 			currentToken.code = SEOF_T;
@@ -286,15 +321,15 @@ hdr_int nextClass(hdr_char c) {
 	case CHRCOL2:
 		val = 2;
 		break;
-	case CHRCOL3:
-		val = 3;
+	case CHRCOL5:
+		val = 5;
 		break;
 	case CHRCOL4:
 		val = 4;
 		break;
 	case CHARSEOF0:
 	case CHARSEOF255:
-		val = 5;
+		val = 6;
 		break;
 	default:
 		if (isalpha(c))
@@ -302,7 +337,7 @@ hdr_int nextClass(hdr_char c) {
 		else if (isdigit(c))
 			val = 1;
 		else
-			val = 6;
+			val = 7;
 	}
 	return val;
 }
@@ -433,7 +468,8 @@ Token funcKEY(hdr_char lexeme[]) {
 		currentToken.attribute.codeType = kwindex;
 	}
 	else {
-		currentToken = funcErr(lexeme);
+		currentToken.code = VID_T;
+		strcpy(currentToken.attribute.idLexeme, lexeme);
 	}
 	return currentToken;
 }
@@ -467,6 +503,16 @@ Token funcErr(hdr_char lexeme[]) {
 			line++;
 	currentToken.code = ERR_T;
 	return currentToken;
+}
+
+
+
+
+
+Token funIL(hdr_char lexeme[])
+{
+
+
 }
 
 
@@ -518,6 +564,12 @@ hdr_void printToken(Token t) {
 		break;
 	case EOS_T:
 		printf("EOS_T\n");
+		break;
+	case ART_T:
+		printf("ART_T\t\t%s\n", t.attribute.arithmeticOperator);
+		break;
+	case VID_T:
+		printf("VID_T\t\t%s\n", t.attribute.idLexeme);
 		break;
 	default:
 		printf("Scanner error: invalid token code: %d\n", t.code);

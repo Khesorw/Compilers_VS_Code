@@ -27,7 +27,7 @@
 #define SCANNER_H_
 
 #ifndef NULL
-//#include <null.h> /* NULL pointer constant is defined there */
+//#include <NULL.h> /* NULL pointer constant is defined there */
 #include "Reader.h"
 #endif
 
@@ -55,7 +55,9 @@ enum TOKENS {
 	EOS_T,		/*  8: End of statement (semicolon) */
 	RTE_T,		/*  9: Run-time error token */
 	INL_T,		/* 10: Integer-Leteral token */
-	SEOF_T		/* 11: Source end-of-file token */
+	SEOF_T,		/* 11: Source end-of-file token */
+	VID_T,		/* 12: variabel ID */
+    ART_T       /* 13: All arithmetic symbols  */
 };
 
 /* TO_DO: Operators token attributes */
@@ -100,7 +102,7 @@ typedef struct Token {
 
 /* EOF definitions */
 #define CHARSEOF0 '\0'
-#define CHARSEOF255 0xFF
+#define CHARSEOF255 0x7f
 
 /*  Special case tokens processed separately one by one in the token-driven part of the scanner
  *  '=' , ' ' , '(' , ')' , '{' , '}' , == , <> , '>' , '<' , ';', 
@@ -110,8 +112,8 @@ typedef struct Token {
 
 /* TO_DO: Define lexeme FIXED classes */
 /* These constants will be used on nextClass */
-#define CHRCOL2 '_'
-#define CHRCOL3 '&'
+#define CHRCOL2 '#'
+#define CHRCOL5 ':'
 #define CHRCOL4 '\''
 
 /* These constants will be used on VID / MID function */
@@ -127,18 +129,17 @@ typedef struct Token {
 
 /* TO_DO: Transition table - type of states defined in separate table */
 static hdr_int transitionTable[][TABLE_COLUMNS] = {
-/*   [A-z] , [0-9],    /#,    #/,    ", :,     other
-	   L(0),  D(1), CS(2), CE(3), Q(4), CO(5),  O(6) */
-	{     1,  8,    6,     ESNR,    4,   ESNR,  ESNR}, // S0: NOAS
-	{     1,  1,    ESWR,  ESWR, ESNR,    3,    2}, // S1: NOAS
-	{    FS,    FS,   FS,   FS,   FS,   FS,    FS}, // S2: ASNR (KEY)
-	{    FS,    FS,   FS,   FS,   FS,   FS,    FS}, // S3: ASWR (MVID)
-	{     4,     4,    4,    4,    5,    4,    4 }, // S4: NOAS[3]
-	{    FS,    FS,   FS,   FS,   FS,   FS,    FS}, // S5: SL (SL)
-	{    6,     6,     6,    7,    6,    6,    6}, // S6: NOAS[4] (ES)
-	{    FS,    FS,   FS,   FS,   FS,   FS,    FS},  // S7: MLTC (ER)
-	{    ESWR,	8,	  ESWR, ESWR, ESWR, ESWR,  ESWR	 }, //S8: NOAS[5]
-	{	   FS,	FS,	   FS,   FS,   FS,   FS,   FS} //S9: IL
+/*   [A-z] , [0-9],   _ ,    :,    ",     SEOF,  other
+	   L(0),  D(1), U(2), CO(3),  Q(4),   E(05), O(6) */
+	{     1,    6,  ESNR,  ESNR,    4,    ESWR,  ESNR}, // S0: NOAS
+	{     1,    1,   1,      2,      3,     3,     3 }, // S1: NOAS
+	{    FS,    FS,   FS,   FS,     FS,     FS,    FS}, // S2: ASNR (MNID)
+	{    FS,    FS,   FS,   FS,     FS,     FS,    FS}, // S3: ASWR (KEY)
+	{     4,     4,    4,    4,      5,     ESWR,  4 }, // S4: NOAS[3]
+	{    FS,    FS,   FS,   FS,     FS,     FS,    FS}, // S5: SL (SL)
+	{    7,     6,     7,    7,      7,      7,     7}, // S6: NOAS[4] (ES)
+	{    FS,    FS,   FS,   FS,     FS,     FS,    FS}  // S7: IL ()
+	
 };
 
 /* Define accepting states types */
@@ -150,12 +151,14 @@ static hdr_int transitionTable[][TABLE_COLUMNS] = {
 static hdr_int stateType[] = {
 	NOFS, /* 00 */
 	NOFS, /* 01 */
-	FSNR, /* 02 (MID) - Methods */
+	FSNR, /* 02 (MNID) */
 	FSWR, /* 03 (KEY) */
 	NOFS, /* 04 */
 	FSNR, /* 05 (SL) */
-	FSNR, /* 06 (Err1 - no retract) */
-	FSWR  /* 07 (Err2 - retract) */
+	NOFS, /*06 */
+	FSWR, /*07 Integer Literal */
+	FSNR, /* 10 (Err1 - no retract) */
+	FSWR  /* 11 (Err2 - retract) */
 };
 
 /*
@@ -183,7 +186,7 @@ Token funcSL	(hdr_char lexeme[]);
 Token funcID	(hdr_char lexeme[]);
 Token funcKEY	(hdr_char lexeme[]);
 Token funcErr	(hdr_char lexeme[]);
-
+Token funIL		(hdr_char lexeme[]);
 /* 
  * Accepting function (action) callback table (array) definition 
  * If you do not want to use the typedef, the equvalent declaration is:
@@ -193,12 +196,14 @@ Token funcErr	(hdr_char lexeme[]);
 static PTR_ACCFUN finalStateTable[] = {
 	NULL,		/* -    [00] */
 	NULL,		/* -    [01] */
-	funcID,		/* MNID	[02] */
-	funcKEY,	/* KEY  [03] */
+	funcKEY,		/* MNID	[02] */
+	funcID,	/* KEY  [03] */
 	NULL,		/* -    [04] */
 	funcSL,		/* SL   [05] */
-	funcErr,	/* ERR1 [06] */
-	funcErr		/* ERR2 [07] */
+	NULL,			/*[06]*/	
+	funIL,				/*[07]*/
+	funcErr,	/* ERR1 [10] */
+	funcErr		/* ERR2 [11] */
 };
 
 /*

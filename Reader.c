@@ -647,7 +647,7 @@ hdr_int readerGetMode(ReaderPointer const readerPointer) {
 
 	if(!readerPointer)
 	{
-		printf("\nError in readerGetMode Function\nReaderPointer is null");
+		printf("\nError in readerGetMode Function\nReaderPointer is NULL");
 		
 
 

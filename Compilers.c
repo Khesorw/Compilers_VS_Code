@@ -131,7 +131,7 @@ hdr_int main(int argc, char** argv) {
 * History/Versions: Ver F22
 * Called functions: -
 * Parameters: -
-* Return value: (Null)
+* Return value: (NULL)
 * Algorithm: -
 *************************************************************
 */
