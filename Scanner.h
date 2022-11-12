@@ -194,15 +194,15 @@ Token funIL		(hdr_char lexeme[]);
 
 /* TO_DO: Define final state table */
 static PTR_ACCFUN finalStateTable[] = {
-	NULL,		/* -    [00] */
-	NULL,		/* -    [01] */
-	funcKEY,		/* MNID	[02] */
-	funcID,	/* KEY  [03] */
-	NULL,		/* -    [04] */
-	funcSL,		/* SL   [05] */
-	NULL,			/*[06]*/	
-	funIL,				/*[07]*/
-	funcErr,	/* ERR1 [10] */
+	NULL,		     /* -    [00]     */
+	NULL,		     /* -    [01]    */
+	funcKEY,		/* MNID	[02]    */
+	funcID,	        /* KEY  [03]   */
+	NULL,		   /* - [04]      */
+	funcSL,		  /* SL [05]     */
+	NULL,		 /*       [06]  */	
+	funIL,		/*    [07]     */
+	funcErr,	/*  ERR1 [10] */
 	funcErr		/* ERR2 [11] */
 };
 
