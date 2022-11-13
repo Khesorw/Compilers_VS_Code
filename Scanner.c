@@ -336,9 +336,9 @@ hdr_int nextClass(hdr_char c) {
 		if (isalpha(c))
 			val = 0;
 		else if (isdigit(c))
-			val = 6;
+			val = 1;
 		else
-			val = 7;
+			val = 6;
 	}
 	return val;
 }

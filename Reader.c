@@ -108,10 +108,10 @@ ReaderPointer readerCreate(hdr_int size, hdr_int increment, hdr_int mode) {
 
 	
 
-	for(int i = 0; i < 128; i++)
-	{
-		readerPointer->histogram[i] = 0;
-	}
+	// for(int i = 0; i < 128; i++)
+	// {
+	// 	readerPointer->histogram[i] = 0;
+	// }
 
 	readerPointer->size = size;
 	readerPointer->increment = increment;
@@ -145,6 +145,7 @@ ReaderPointer readerCreate(hdr_int size, hdr_int increment, hdr_int mode) {
 ReaderPointer readerAddChar(ReaderPointer const readerPointer, hdr_char ch) {
 	hdr_char* tempReader = NULL;
 	hdr_int newSize = 0;
+	hdr_char* cpy;
 	/* TO_DO: Defensive programming */
 	if(readerPointer == NULL )
 	{
@@ -181,6 +182,8 @@ ReaderPointer readerAddChar(ReaderPointer const readerPointer, hdr_char ch) {
 			return NULL;
 		}
 		/* TO_DO: New reader allocation */
+
+		cpy = readerPointer->content;
 		tempReader = (char *)realloc(readerPointer->content,newSize);
 		if(!tempReader) return NULL;
 
@@ -194,6 +197,12 @@ ReaderPointer readerAddChar(ReaderPointer const readerPointer, hdr_char ch) {
 	readerPointer->content[readerPointer->position.wrte++] = ch;
 	/* TO_DO: Updates histogram */
 	readerPointer->histogram[ch]++;
+
+	if(readerPointer->position.wrte >= readerPointer->size)
+	{
+
+		readerPointer->flags |= HD_SET_FUL;
+	}
 	return readerPointer;
 }//readerAddChar()
 
@@ -444,7 +453,9 @@ hdr_boln readerRetract(ReaderPointer const readerPointer) {
 */
 hdr_boln readerRestore(ReaderPointer const readerPointer) {
 	/* TO_DO: Defensive programming */
+	if(!readerPointer) return NULL;
 	/* TO_DO: Restore positions (read/mark) */
+	readerPointer->position.read = readerPointer->position.mark;
 	return hdr_TRUE;
 }
 
@@ -516,8 +527,11 @@ hdr_char* readerGetContent(ReaderPointer const readerPointer, hdr_int pos) {
 */
 hdr_int readerGetPosRead(ReaderPointer const readerPointer) {
 	/* TO_DO: Defensive programming */
+	if(!readerPointer) return NULL;
+
+
 	/* TO_DO: Return read */
-	return 0;
+	return readerPointer->position.read;
 }
 
 

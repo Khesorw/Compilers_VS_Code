@@ -147,7 +147,7 @@ hdr_int mainScanner(hdr_int argc, hdr_char** argv) {
 	stringLiteralTable = readerCreate(READER_DEFAULT_SIZE, READER_DEFAULT_INCREMENT, MODE_ADDIT);
 	if (stringLiteralTable == NULL) {
 		printScannerError("%s%s", argv[0], ": Could not create string literals buffer");
-		exit(EXIT_FAILURE);
+	 	exit(EXIT_FAILURE);
 	}
 
 	/* Testbed for the scanner and add SEOF to input program buffer*/
@@ -167,7 +167,11 @@ hdr_int mainScanner(hdr_int argc, hdr_char** argv) {
 
 	/* Print String Literal Table if not empty */
 	printf("\nPrinting string table...\n");
+
+
 	printf("----------------------------------\n");
+
+	
 	if (readerGetPosWrte(stringLiteralTable)) {
 		readerPrint(stringLiteralTable);
 	}
