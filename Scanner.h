@@ -45,7 +45,7 @@
 /* TO_DO: Define Token codes - Create your token classes */
 enum TOKENS {
 	ERR_T,		/*  0: Error token */
-	MNID_T,		/*  1: Method name identifier token (start: &) */
+	MNID_T,		/*  1: Method name identifier token (start: ) */
 	STR_T,		/*  2: String literal token */
 	LPR_T,		/*  3: Left parenthesis token */
 	RPR_T,		/*  4: Right parenthesis token */
@@ -57,7 +57,8 @@ enum TOKENS {
 	INL_T,		/* 10: Integer-Leteral token */
 	SEOF_T,		/* 11: Source end-of-file token */
 	VID_T,		/* 12: variabel ID */
-    ART_T       /* 13: All arithmetic symbols  */
+    ART_T,      /* 13: All arithmetic symbols  */
+	ASSIN_T		/* 14: Assignment Operator */
 };
 
 /* TO_DO: Operators token attributes */
@@ -68,7 +69,7 @@ typedef enum SourceEndOfFile { SEOF_0, SEOF_255 } EofOperator;
 
 /* TO_DO: Data structures for declaring the token and its attributes */
 typedef union TokenAttribute {
-	hdr_int codeType;      /* integer attributes accessor */
+	hdr_int codeType;    				  /* integer attributes accessor */
 	AriOperator arithmeticOperator;		/* arithmetic operator attribute code */
 	RelOperator relationalOperator;		/* relational operator attribute code */
 	LogOperator logicalOperator;		/* logical operator attribute code */
@@ -118,7 +119,7 @@ typedef struct Token {
 #define CHARCOL4_2 '\"'
 
 /* These constants will be used on VID / MID function */
-#define MNIDPREFIX '&'
+#define MNIDPREFIX ':'
 
 /* TO_DO: Error states and illegal state */
 #define FS		100		/* Illegal state */
@@ -187,7 +188,8 @@ Token funcSL	(hdr_char lexeme[]);
 Token funcID	(hdr_char lexeme[]);
 Token funcKEY	(hdr_char lexeme[]);
 Token funcErr	(hdr_char lexeme[]);
-Token funIL		(hdr_char lexeme[]);
+Token funcIL		(hdr_char lexeme[]);
+
 /* 
  * Accepting function (action) callback table (array) definition 
  * If you do not want to use the typedef, the equvalent declaration is:
@@ -197,12 +199,12 @@ Token funIL		(hdr_char lexeme[]);
 static PTR_ACCFUN finalStateTable[] = {
 	NULL,		     /* -    [00]     */
 	NULL,		     /* -    [01]    */
-	funcKEY,		/* MNID	[02]    */
-	funcID,	        /* KEY  [03]   */
+	funcID,		/* MNID	[02]    */
+	funcKEY,	        /* KEY  [03]   */
 	NULL,		   /* - [04]      */
 	funcSL,		  /* SL [05]     */
 	NULL,		 /*       [06]  */	
-	funIL,		/*    [07]     */
+	funcIL,		/*    [07]     */
 	funcErr,	/*  ERR1 [10] */
 	funcErr		/* ERR2 [11] */
 };

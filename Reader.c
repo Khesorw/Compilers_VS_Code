@@ -432,7 +432,10 @@ hdr_boln readerRecover(ReaderPointer const readerPointer) {
 */
 hdr_boln readerRetract(ReaderPointer const readerPointer) {
 	/* TO_DO: Defensive programming */
+	if(!readerPointer) return NULL;
+
 	/* TO_DO: Retract (return 1 pos read) */
+	readerPointer->position.read--;
 	return hdr_TRUE;
 }
 
@@ -477,6 +480,7 @@ hdr_boln readerRestore(ReaderPointer const readerPointer) {
 */
 hdr_char readerGetChar(ReaderPointer const readerPointer) {
 	/* TO_DO: Defensive programming */
+	if(!readerPointer) return NULL;
 	/* TO_DO: Check condition to read/wrte */
 	/* TO_DO: Set EOB flag */
 	/* TO_DO: Reset EOB flag */

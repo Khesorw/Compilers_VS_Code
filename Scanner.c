@@ -142,6 +142,10 @@ Token tokenizer(void) {
 		case ';':
 			currentToken.code = EOS_T;
 			return currentToken;
+		
+		case '=':
+			currentToken.code = ASSIN_T;
+			return currentToken;
 		case '(':
 			currentToken.code = LPR_T;
 			return currentToken;
@@ -163,9 +167,10 @@ Token tokenizer(void) {
 					readerRetract(sourceBuffer);
 					//return currentToken;
 				}
-				// else if (c == '\n') {
-				// 	line++;
-				// }
+				else if (c == '\n') 
+				{
+					line++;
+				}
 				
 			} while (c != '\n' && c != CHARSEOF0 && c != CHARSEOF255);
 			break;
@@ -188,15 +193,15 @@ Token tokenizer(void) {
 					line++;
 				}
 
-				if(newc == '#' && (newc = readerGetChar(sourceBuffer)) == '/')
-				{
+				if(newc == '#' && (newc = readerGetChar(sourceBuffer)) == '/') {
 					break;
 				}
 
 			}
 
 
-		} else {
+		} 
+		else {
 			readerRetract(sourceBuffer);
 			currentToken.code = ART_T;
 			currentToken.attribute.arithmeticOperator = OP_DIV;
@@ -322,7 +327,7 @@ hdr_int nextClass(hdr_char c) {
 		val = 2;
 		break;
 	case CHRCOL5:
-		val = 5;
+		val = 3;
 		break;
 	case CHRCOL4:
 	case CHARCOL4_2:
@@ -333,7 +338,7 @@ hdr_int nextClass(hdr_char c) {
 		val = 6;
 		break;
 	default:
-		if (isalpha(c))
+		if (isalpha(c) || (c == '_'))
 			val = 0;
 		else if (isdigit(c))
 			val = 1;
@@ -549,16 +554,16 @@ hdr_void printToken(Token t) {
 		printf("%s\n", readerGetContent(stringLiteralTable, (hdr_int)t.attribute.codeType));
 		break;
 	case LPR_T:
-		printf("LPR_T\n");
+		printf("LPR_T (\n");
 		break;
 	case RPR_T:
-		printf("RPR_T\n");
+		printf("RPR_T )\n");
 		break;
 	case LBR_T:
-		printf("LBR_T\n");
+		printf("LBR_T {\n");
 		break;
 	case RBR_T:
-		printf("RBR_T\n");
+		printf("RBR_T }\n");
 		break;
 	case KW_T:
 		printf("KW_T\t\t%s\n", keywordTable[t.attribute.codeType]);
@@ -572,6 +577,14 @@ hdr_void printToken(Token t) {
 	case VID_T:
 		printf("VID_T\t\t%s\n", t.attribute.idLexeme);
 		break;
+	case INL_T:
+		printf("INL_T\t%d\n",t.attribute.intValue);
+		break;
+	case ASSIN_T:
+		printf("ASSIN_T \t=\n");
+		break;
+
+	
 	default:
 		printf("Scanner error: invalid token code: %d\n", t.code);
 	}
