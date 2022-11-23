@@ -65,8 +65,6 @@
 
 hdr_int main(int argc, char** argv) {
 
-
-	 
 	hdr_int i;
 	printLogo();
 	argc = 3;

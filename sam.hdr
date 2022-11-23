@@ -1,1 +1,3 @@
 sam = "Hello john"
+print("Hello")
+def pri:
