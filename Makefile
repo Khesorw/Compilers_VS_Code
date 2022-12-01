@@ -1,8 +1,11 @@
-output: MainScanner.o Compilers.o Reader.o Scanner.o mainReader.o
-	gcc MainScanner.o Compilers.o Reader.o Scanner.o mainReader.o -o output
+output: MainParser.o Compilers.o Reader.o Scanner.o Parser.o MainScanner.o mainReader.o 
+	gcc MainParser.o MainScanner.o Compilers.o Reader.o Scanner.o Parser.o MainScanner.o mainReader.o -o output
 
-MainScanner.o: MainScanner.c
-	gcc -c MainScanner.c
+MainParser.o: MainParser.c
+	gcc -c MainParser.c
+
+Parser.o: Parser.c
+	gcc -c Parser.c
 
 Compilers.o: Compilers.c 
 	gcc -c Compilers.c
@@ -15,6 +18,9 @@ Scanner.o: Scanner.c
 
 mainReader.o: mainReader.c
 	gcc -c mainReader.c
+
+MainScanner.o: MainScanner.c
+	gcc -c MainScanner.c
 	
 clean:
 	rm *.o output
