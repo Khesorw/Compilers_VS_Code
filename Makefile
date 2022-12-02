@@ -1,5 +1,5 @@
-output: MainParser.o Compilers.o Reader.o Scanner.o Parser.o MainScanner.o mainReader.o 
-	gcc MainParser.o MainScanner.o Compilers.o Reader.o Scanner.o Parser.o MainScanner.o mainReader.o -o output
+output: MainParser.o Compilers.o Reader.o Scanner.o Parser.o mainReader.o MainScanner.o
+	gcc MainParser.o Compilers.o Reader.o Scanner.o Parser.o mainReader.o MainScanner.o -o output
 
 MainParser.o: MainParser.c
 	gcc -c MainParser.c

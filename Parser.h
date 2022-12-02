@@ -24,7 +24,7 @@
 ************************************************************
 * File name: parser.h
 * Compiler: MS Visual Studio 2022
-* Course: CST 8152 – Compilers, Lab Section: [011, 012, 013]
+* Course: CST 8152 ï¿½ Compilers, Lab Section: [011, 012, 013]
 * Assignment: A32.
 * Date: Sep 01 2022
 * Professor: Paulo Sousa
@@ -53,49 +53,51 @@
 /* Global vars */
 static Token lookahead;
 extern BufferReader* stringLiteralTable;
-extern boa_intg line;
+extern hdr_int line;
 extern Token tokenizer();
-extern boa_char* keywordTable[];
-boa_intg syntaxErrorNumber = 0;
+extern hdr_char* keywordTable[];
+hdr_int syntaxErrorNumber = 0;
 
-#define STR_LANGNAME	"Boa"
-#define LANG_WRTE		"print&"
-#define LANG_READ		"input&"
-#define LANG_MAIN		"main&"
+#define STR_LANGNAME	"hdr"
+#define LANG_WRTE		"print"
+#define LANG_READ		"input"
+#define LANG_MAIN		"main"
 
 /* TO_DO: Create ALL constants for keywords (sequence given in table.h) */
 
 /* Constants */
 enum KEYWORDS {
 	NO_ATTR = -1,
-	KW_data,
-	KW_code,
+	KW_print,
+	KW_input,
 	KW_int,
-	KW_real,
 	KW_string,
+	KW_bit,
 	KW_if,
-	KW_then,
 	KW_else,
 	KW_while,
-	KW_do
+	KW_for,
+	KW_break,
+	KW_return,
+	KW_def
 };
 
 /* Function definitions */
-boa_void startParser();
-boa_void matchToken(boa_intg, boa_intg);
-boa_void syncErrorHandler(boa_intg);
-boa_void printError();
+hdr_void startParser();
+hdr_void matchToken(hdr_int, hdr_int);
+hdr_void syncErrorHandler(hdr_int);
+hdr_void printError();
 
 /* TO_DO: Place ALL non-terminal function declarations */
-boa_void codeSession();
-boa_void dataSession();
-boa_void optVarListDeclarations();
-boa_void optionalStatements();
-boa_void outputStatement();
-boa_void outputVariableList();
-boa_void program();
-boa_void statement();
-boa_void statements();
-boa_void statementsPrime();
+hdr_void codeSession();
+hdr_void dataSession();
+hdr_void optVarListDeclarations();
+hdr_void optionalStatements();
+hdr_void outputStatement();
+hdr_void outputVariableList();
+hdr_void program();
+hdr_void statement();
+hdr_void statements();
+hdr_void statementsPrime();
 
 #endif

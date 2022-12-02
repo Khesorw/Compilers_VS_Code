@@ -49,7 +49,7 @@
  */
 /* TO_DO: This is the function to start the parser - check your program definition */
 
-boa_void startParser() {
+hdr_void startParser() {
 	lookahead = tokenizer();
 	if (lookahead.code != SEOF_T) {
 		program();
@@ -65,8 +65,8 @@ boa_void startParser() {
  ***********************************************************
  */
 /* TO_DO: This is the main code for match - check your definition */
-boa_void matchToken(boa_intg tokenCode, boa_intg tokenAttribute) {
-	boa_intg matchFlag = 1;
+hdr_void matchToken(hdr_int tokenCode, hdr_int tokenAttribute) {
+	hdr_int matchFlag = 1;
 	switch (lookahead.code) {
 	case KW_T:
 		if (lookahead.attribute.codeType != tokenAttribute)
@@ -95,7 +95,7 @@ boa_void matchToken(boa_intg tokenCode, boa_intg tokenAttribute) {
  ***********************************************************
  */
 /* TO_DO: This is the function to handler error - adjust basically datatypes */
-boa_void syncErrorHandler(boa_intg syncTokenCode) {
+hdr_void syncErrorHandler(hdr_int syncTokenCode) {
 	printError();
 	syntaxErrorNumber++;
 	while (lookahead.code != syncTokenCode) {
@@ -113,7 +113,7 @@ boa_void syncErrorHandler(boa_intg syncTokenCode) {
  ***********************************************************
  */
 /* TO_DO: This is the function to error printing - adjust basically datatypes */
-boa_void printError() {
+hdr_void printError() {
 	Token t = lookahead;
 	printf("%s%s%3d\n", STR_LANGNAME, ": Syntax error:  Line:", line);
 	printf("*****  Token code:%3d Attribute: ", t.code);
@@ -148,6 +148,21 @@ boa_void printError() {
 	case EOS_T:
 		printf("NA\n");
 		break;
+	case ASSIN_T:
+		printf("ASSIN_T\n");
+		break;
+	case ART_T:
+		printf("ART_T\n");
+		break;
+	case VID_T:
+		printf("VID_T\n");
+		break;
+	case INL_T:
+		printf("INL_T\n");
+		break;
+	case RTE_T:
+		printf("RTE_T\n");
+		break;
 	default:
 		printf("%s%s%d\n", STR_LANGNAME, ": Scanner error: invalid token code: ", t.code);
 	}
@@ -160,13 +175,13 @@ boa_void printError() {
  * FIRST(<program>)= {MNID_T (main&)}.
  ***********************************************************
  */
-boa_void program() {
+hdr_void program() {
 	switch (lookahead.code) {
 	case MNID_T:
 		if (strncmp(lookahead.attribute.idLexeme, LANG_MAIN, 5) == 0) {
 			matchToken(MNID_T, NO_ATTR);
 			matchToken(LBR_T, NO_ATTR);
-			dataSession();
+		//	dataSession();
 			codeSession();
 			matchToken(RBR_T, NO_ATTR);
 			break;
@@ -174,6 +189,7 @@ boa_void program() {
 		else {
 			printError();
 		}
+	
 	case SEOF_T:
 		; // Empty
 		break;
@@ -190,13 +206,13 @@ boa_void program() {
  * FIRST(<program>)= {KW_T (KW_data)}.
  ***********************************************************
  */
-boa_void dataSession() {
-	matchToken(KW_T, KW_data);
-	matchToken(LBR_T, NO_ATTR);
-	optVarListDeclarations();
-	matchToken(RBR_T, NO_ATTR);
-	printf("%s%s\n", STR_LANGNAME, ": Data Session parsed");
-}
+// hdr_void dataSession() {
+// 	matchToken(KW_T, KW_data);
+// 	matchToken(LBR_T, NO_ATTR);
+// 	optVarListDeclarations();
+// 	matchToken(RBR_T, NO_ATTR);
+// 	printf("%s%s\n", STR_LANGNAME, ": Data Session parsed");
+// }
 
 /*
  ************************************************************
@@ -205,7 +221,7 @@ boa_void dataSession() {
  * FIRST(<opt_varlist_declarations>) = { e, KW_T (KW_int), KW_T (KW_real), KW_T (KW_string)}.
  ***********************************************************
  */
-boa_void optVarListDeclarations() {
+hdr_void optVarListDeclarations() {
 	switch (lookahead.code) {
 	default:
 		; // Empty
@@ -220,12 +236,9 @@ boa_void optVarListDeclarations() {
  * FIRST(<codeSession>)= {KW_T (KW_code)}.
  ***********************************************************
  */
-boa_void codeSession() {
-	matchToken(KW_T, KW_code);
-	matchToken(LBR_T, NO_ATTR);
-	optionalStatements();
-	matchToken(RBR_T, NO_ATTR);
-	printf("%s%s\n", STR_LANGNAME, ": Code Session parsed");
+hdr_void codeSession() {
+	
+
 }
 
 /* TO_DO: Continue the development (all non-terminal functions) */
@@ -238,7 +251,7 @@ boa_void codeSession() {
  *				KW_T(KW_while), MNID_T(print&), MNID_T(input&) }
  ***********************************************************
  */
-boa_void optionalStatements() {
+hdr_void optionalStatements() {
 	switch (lookahead.code) {
 	case MNID_T:
 		if ((strncmp(lookahead.attribute.idLexeme, LANG_WRTE, 6) == 0) ||
@@ -260,7 +273,7 @@ boa_void optionalStatements() {
  *		KW_T(KW_while), MNID_T(input&), MNID_T(print&) }
  ***********************************************************
  */
-boa_void statements() {
+hdr_void statements() {
 	statement();
 	statementsPrime();
 	printf("%s%s\n", STR_LANGNAME, ": Statements parsed");
@@ -274,7 +287,7 @@ boa_void statements() {
  *		KW_T(KW_if), KW_T(KW_while), MNID_T(input&), MNID_T(print&) }
  ***********************************************************
  */
-boa_void statementsPrime() {
+hdr_void statementsPrime() {
 	switch (lookahead.code) {
 	case MNID_T:
 		if (strncmp(lookahead.attribute.idLexeme, LANG_WRTE, 6) == 0) {
@@ -295,7 +308,7 @@ boa_void statementsPrime() {
  *			MNID_T(input&), MNID_T(print&) }
  ***********************************************************
  */
-boa_void statement() {
+hdr_void statement() {
 	switch (lookahead.code) {
 	case KW_T:
 		switch (lookahead.attribute.codeType) {
@@ -308,6 +321,8 @@ boa_void statement() {
 			outputStatement();
 		}
 		break;
+
+    
 	default:
 		printError();
 	}
@@ -321,7 +336,7 @@ boa_void statement() {
  * FIRST(<output statement>) = { MNID_T(print&) }
  ***********************************************************
  */
-boa_void outputStatement() {
+hdr_void outputStatement() {
 	matchToken(MNID_T, NO_ATTR);
 	matchToken(LPR_T, NO_ATTR);
 	outputVariableList();
@@ -337,7 +352,7 @@ boa_void outputStatement() {
  * FIRST(<opt_variable_list>) = { IVID_T, FVID_T, SVID_T, ϵ }
  ***********************************************************
  */
-boa_void outputVariableList() {
+hdr_void outputVariableList() {
 	switch (lookahead.code) {
 	case STR_T:
 		matchToken(STR_T, NO_ATTR);

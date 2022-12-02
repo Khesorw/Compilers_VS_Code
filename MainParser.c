@@ -24,7 +24,7 @@
 ************************************************************
 * File name: mainParser.c
 * Compiler: MS Visual Studio 2022
-* Course: CST 8152 – Compilers, Lab Section: [011, 012, 013]
+* Course: CST 8152 ï¿½ Compilers, Lab Section: [011, 012, 013]
 * Assignment: A32.
 * Date: Sep 01 2022
 * Professor: Paulo Sousa
@@ -80,11 +80,11 @@
  /* Global objects - variables */
 static ReaderPointer sourceBuffer; /* pointer to input (source) buffer */
 ReaderPointer stringLiteralTable; /* This buffer is used as a repository for string literals */
-boa_intg errorNumber;     /* Run-time error number = 0 by default (ANSI) */
+hdr_int errorNumber;     /* Run-time error number = 0 by default (ANSI) */
 
 /* External objects */
-extern boa_intg syntaxErrorNumber /* number of syntax errors reported by the parser */;
-extern boa_intg line; /* source code line number - defined in scanner.c */
+extern hdr_int syntaxErrorNumber /* number of syntax errors reported by the parser */;
+extern hdr_int line; /* source code line number - defined in scanner.c */
 
 /*
  * -------------------------------------------------------------
@@ -93,13 +93,13 @@ extern boa_intg line; /* source code line number - defined in scanner.c */
  */
 
  /* Function declarations (prototypes) */
-extern boa_void startParser(boa_void);
-extern boa_intg startScanner(ReaderPointer sc_buf);
+extern hdr_void startParser(hdr_void);
+extern hdr_int startScanner(ReaderPointer sc_buf);
 
-static boa_void printParserError(boa_char* fmt, ...);
-static boa_void displayParser(ReaderPointer ptrBuffer);
-static boa_long getParserFileSize(boa_char* fname);
-static boa_void callGarbageCollector(boa_void);
+static hdr_void printParserError(hdr_char* fmt, ...);
+static hdr_void displayParser(ReaderPointer ptrBuffer);
+static hdr_long getParserFileSize(hdr_char* fname);
+static hdr_void callGarbageCollector(hdr_void);
 
 
 /*
@@ -112,10 +112,10 @@ static boa_void callGarbageCollector(boa_void);
 ***********************************************************
 */
 
-boa_intg mainParser(boa_intg argc, boa_char** argv) {
+hdr_int mainParser(hdr_int argc, hdr_char** argv) {
 
 	FILE* fi;       /* input file handle */
-	boa_intg loadsize = 0; /*the size of the file loaded in the buffer */
+	hdr_int loadsize = 0; /*the size of the file loaded in the buffer */
 
 	/*check for correct arrguments - source file name */
 	if (argc <= 1) {
@@ -190,12 +190,12 @@ boa_intg mainParser(boa_intg argc, boa_char** argv) {
 ************************************************************
 */
 
-boa_void printParserError(boa_char* fmt, ...) {
+hdr_void printParserError(hdr_char* fmt, ...) {
 
 	va_list ap;
 	va_start(ap, fmt);
 
-	(boa_void)vfprintf(stderr, fmt, ap);
+	(hdr_void)vfprintf(stderr, fmt, ap);
 	va_end(ap);
 
 	/* Move to new line */
@@ -213,9 +213,9 @@ boa_void printParserError(boa_char* fmt, ...) {
 ************************************************************
 */
 
-boa_long getParserFileSize(boa_char* fname) {
+hdr_long getParserFileSize(hdr_char* fname) {
 	FILE* input;
-	boa_long flength;
+	hdr_long flength;
 	input = fopen(fname, "r");
 	if (input == NULL) {
 		printParserError("%s%s", "Cannot open file: ", fname);
@@ -235,7 +235,7 @@ boa_long getParserFileSize(boa_char* fname) {
 ************************************************************
 */
 
-boa_void displayParser(ReaderPointer ptrBuffer) {
+hdr_void displayParser(ReaderPointer ptrBuffer) {
 	printf("\nPrinting input buffer parameters:\n\n");
 	printf("The capacity of the buffer is:  %d\n", readerGetSize(ptrBuffer));
 	printf("The current size of the buffer is:  %d\n", readerGetPosWrte(ptrBuffer));
@@ -251,7 +251,7 @@ boa_void displayParser(ReaderPointer ptrBuffer) {
 ************************************************************
 */
 
-boa_void callGarbageCollector(boa_void) {
+hdr_void callGarbageCollector(hdr_void) {
 	if (syntaxErrorNumber)
 		printf("\nSyntax errors: %d\n", syntaxErrorNumber);
 	printf("\nCollecting garbage...\n");
