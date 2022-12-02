@@ -327,6 +327,7 @@ hdr_int nextClass(hdr_char c) {
 		val = 2;
 		break;
 	case CHRCOL5:
+	
 		val = 3;
 		break;
 	case CHRCOL4:

@@ -190,6 +190,11 @@ hdr_void program() {
 			printError();
 		}
 	
+	case STR_T:
+
+	;
+
+	
 	case SEOF_T:
 		; // Empty
 		break;
@@ -320,7 +325,17 @@ hdr_void statement() {
 		if (strncmp(lookahead.attribute.idLexeme, LANG_WRTE, 6) == 0) {
 			outputStatement();
 		}
+		else{
+			matchToken(MNID_T, NO_ATTR);
+			statements();
+		}
 		break;
+		case VID_T:
+		matchToken(VID_T, NO_ATTR);
+		matchToken(ASSIN_T, NO_ATTR);
+		matchToken(VID_T, NO_ATTR);
+		break;
+
 
     
 	default:
