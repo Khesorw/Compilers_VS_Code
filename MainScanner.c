@@ -65,7 +65,7 @@ hdr_int errorNumber;				/* Run-time error number = 0 by default (ANSI) */
 
 /* External objects */
 extern hdr_int line; /* Source code line numbers - defined in scanner.c */
-extern Token tokenizer(sofia_nul);
+extern Token tokenizer(hdr_void);
 
 /*
  * -------------------------------------------------------------

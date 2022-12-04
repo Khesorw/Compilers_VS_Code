@@ -58,7 +58,10 @@ enum TOKENS {
 	SEOF_T,		/* 11: Source end-of-file token */
 	VID_T,		/* 12: variabel ID */
     ART_T,      /* 13: All arithmetic symbols  */
-	ASSIN_T		/* 14: Assignment Operator */
+	ASSIN_T	,	/* 14: Assignment Operator */
+	REL_T,
+	LOGIC_T
+
 };
 
 /* TO_DO: Operators token attributes */
@@ -133,12 +136,12 @@ typedef struct Token {
 static hdr_int transitionTable[][TABLE_COLUMNS] = {
 /*   [A-z] , [0-9],   _ ,    :,    ",     SEOF,  other
 	   L(0),  D(1), U(2), CO(3),  Q(4),   E(05), O(6) */
-	{     1,    7,  ESNR,  ESNR,    5,    ESWR,  ESNR}, // S0: NOAS
-	{     1,    1,   1,      2,      4,     4,     4 }, // S1: NOAS
-	{     2,    2,   ESNR,   3,     2,     ESWR,   ESWR}, // S2: ASNR (MNID)
-	{    FS,    FS,   FS,   FS,     FS,     FS,    FS}, // S3: ASWR (KEY) //ASNR(MNID)
-	{    FS,    FS,   FS,   FS,     FS,     FS,    FS }, // S4: NOAS[3] // ASWR(KEY)
-	{    5,     5,    5,    5,      6,      ESWR, ESWR}, // S5: SL (SL)
+	{     1,    6,  ESNR,  ESNR,    4,    ESWR,  ESNR}, // S0: NOAS
+	{     1,    1,   1,      2,      3,     3,     3 }, // S1: NOAS
+	{    FS,    FS,   FS,   FS,     FS,     FS,    FS}, // S2: ASNR (MNID)
+	{    FS,    FS,   FS,   FS,     FS,     FS,    FS}, // S3: ASWR (KEY)
+	{     4,     4,    4,    4,      5,     ESWR,  4 }, // S4: NOAS[3]
+	{    FS,    FS,   FS,   FS,     FS,     FS,    FS}, // S5: SL (SL)
 	{    7,     6,     7,    7,      7,      7,     7}, // S6: NOAS[4] (ES)
 	{    FS,    FS,   FS,   FS,     FS,     FS,    FS}  // S7: IL ()
 	
@@ -153,13 +156,13 @@ static hdr_int transitionTable[][TABLE_COLUMNS] = {
 static hdr_int stateType[] = {
 	NOFS, /* 00 */
 	NOFS, /* 01 */
-	NOFS, /* 02 (MNID) */
-	FSNR, /* 03 (KEY) */
-	FSWR, /* 04 */
-	NOFS, /* 05 (SL) */
-	FSNR, /*06 */
-	NOFS, /*07 Integer Literal */
-	FSWR, /* 10 (Err1 - no retract) */
+	FSNR, /* 02 (MNID) */
+	FSWR, /* 03 (KEY) */
+	NOFS, /* 04 */
+	FSNR, /* 05 (SL) */
+	NOFS, /*06 */
+	FSWR, /*07 Integer Literal */
+	FSNR, /* 10 (Err1 - no retract) */
 	FSWR  /* 11 (Err2 - retract) */
 };
 
@@ -199,15 +202,14 @@ Token funcIL		(hdr_char lexeme[]);
 static PTR_ACCFUN finalStateTable[] = {
 	NULL,		     /* -    [00]     */
 	NULL,		     /* -    [01]    */
-	NULL,		/* MNID	[02]    */
-	funcID,	        /* KEY  [03]   */
-	funcID,		   /* - [04]      */
-	NULL,		  /* SL [05]     */
-	funcSL,		 /*       [06]  */	
-	NULL,		/*    [07]     */
-	funcIL,	/*  ERR1 [10] */
-	funcErr,
-	funcIL		/* ERR2 [11] */
+	funcID,		/* MNID	[02]    */
+	funcKEY,	        /* KEY  [03]   */
+	NULL,		   /* - [04]      */
+	funcSL,		  /* SL [05]     */
+	NULL,		 /*       [06]  */	
+	funcIL,		/*    [07]     */
+	funcErr,	/*  ERR1 [10] */
+	funcErr		/* ERR2 [11] */
 };
 
 /*

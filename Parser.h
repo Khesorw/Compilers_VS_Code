@@ -61,25 +61,25 @@ hdr_int syntaxErrorNumber = 0;
 #define STR_LANGNAME	"hdr"
 #define LANG_WRTE		"print"
 #define LANG_READ		"input"
-#define LANG_MAIN		"main"
+#define LANG_MAIN		"main:"
 
 /* TO_DO: Create ALL constants for keywords (sequence given in table.h) */
 
 /* Constants */
 enum KEYWORDS {
 	NO_ATTR = -1,
-	KW_print,
-	KW_input,
-	KW_int,
-	KW_string,
-	KW_bit,
-	KW_if,
-	KW_else,
-	KW_while,
-	KW_for,
-	KW_break,
-	KW_return,
-	KW_def
+	PRINT,
+	INPUT,
+	INT,
+	STR,
+	BIT,
+	IF,
+	ELSE,
+	WHILE,
+	FOR,
+	BREAK,
+	RETURN,
+	DEF
 };
 
 /* Function definitions */

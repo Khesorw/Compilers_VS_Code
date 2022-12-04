@@ -179,11 +179,9 @@ hdr_void program() {
 	switch (lookahead.code) {
 	case MNID_T:
 		if (strncmp(lookahead.attribute.idLexeme, LANG_MAIN, 5) == 0) {
-			matchToken(MNID_T, NO_ATTR);
-			matchToken(LBR_T, NO_ATTR);
+		
 		//	dataSession();
 			codeSession();
-			matchToken(RBR_T, NO_ATTR);
 			break;
 		}
 		else {
@@ -193,6 +191,13 @@ hdr_void program() {
 	case STR_T:
 
 	;
+	break;
+	case VID_T:
+		matchToken(VID_T, NO_ATTR);
+		matchToken(ASSIN_T, NO_ATTR);
+		matchToken(VID_T, NO_ATTR);
+
+	break;
 
 	
 	case SEOF_T:
@@ -228,6 +233,9 @@ hdr_void program() {
  */
 hdr_void optVarListDeclarations() {
 	switch (lookahead.code) {
+		case INT:
+		case STR:
+		
 	default:
 		; // Empty
 	}
@@ -242,6 +250,12 @@ hdr_void optVarListDeclarations() {
  ***********************************************************
  */
 hdr_void codeSession() {
+matchToken(MNID_T,NO_ATTR);
+matchToken(LBR_T,NO_ATTR);
+statement();
+matchToken(RBR_T,NO_ATTR);
+printf("HDR_Implemention: Implemention Parsed\n");
+
 	
 
 }
@@ -320,7 +334,7 @@ hdr_void statement() {
 		default:
 			printError();
 		}
-		break;
+	break;
 	case MNID_T:
 		if (strncmp(lookahead.attribute.idLexeme, LANG_WRTE, 6) == 0) {
 			outputStatement();
@@ -329,12 +343,21 @@ hdr_void statement() {
 			matchToken(MNID_T, NO_ATTR);
 			statements();
 		}
-		break;
-		case VID_T:
+	break;
+
+
+	case VID_T:
 		matchToken(VID_T, NO_ATTR);
 		matchToken(ASSIN_T, NO_ATTR);
 		matchToken(VID_T, NO_ATTR);
-		break;
+	break;
+
+	case RBR_T:
+		printf("empty_function parsed:\n");
+
+	break;
+
+		
 
 
     
@@ -342,7 +365,7 @@ hdr_void statement() {
 		printError();
 	}
 	printf("%s%s\n", STR_LANGNAME, ": Statement parsed");
-}
+} 
 
 /*
  ************************************************************

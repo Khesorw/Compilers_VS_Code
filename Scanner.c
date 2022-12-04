@@ -144,6 +144,15 @@ Token tokenizer(void) {
 			return currentToken;
 		
 		case '=':
+		newc = readerGetChar(sourceBuffer);
+		if(newc == '=')
+		{
+			currentToken.code = REL_T;
+			currentToken.attribute.relationalOperator = OP_EQ;
+			return currentToken;
+		}
+
+		
 			currentToken.code = ASSIN_T;
 			return currentToken;
 		case '(':
@@ -158,6 +167,24 @@ Token tokenizer(void) {
 		case '}':
 			currentToken.code = RBR_T;
 			return currentToken;
+		
+		case '+':
+			currentToken.code = ART_T;
+			currentToken.attribute.arithmeticOperator = OP_ADD;
+			return currentToken;
+
+		case '-':
+			currentToken.code = ART_T;
+			currentToken.attribute.arithmeticOperator = OP_SUB;
+			return currentToken;
+
+		case '*':
+			currentToken.code = ART_T;
+			currentToken.attribute.arithmeticOperator = OP_MUL;
+			return currentToken;
+		
+
+
 		/* Comments */
 		case '#':
 			newc = readerGetChar(sourceBuffer);
@@ -199,7 +226,7 @@ Token tokenizer(void) {
 
 			}
 
-
+			
 		} 
 		else {
 			readerRetract(sourceBuffer);
