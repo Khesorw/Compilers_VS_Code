@@ -259,7 +259,7 @@ hdr_void codeSession() {
 matchToken(MNID_T,NO_ATTR);
 matchToken(LBR_T,NO_ATTR);
 statement();
-if(lookahead.code != RBR_T){
+while(lookahead.code != RBR_T && lookahead.code != EOF){
 	statement();
 }
 matchToken(RBR_T,NO_ATTR);
@@ -360,7 +360,35 @@ hdr_void statement() {
 	case VID_T:
 		matchToken(VID_T, NO_ATTR);
 		matchToken(ASSIN_T, NO_ATTR);
-		matchToken(VID_T, NO_ATTR);
+		if(lookahead.code == EOS_T) printError();
+
+		// if(lookahead.code  VID_T)
+		// {
+		// 	outputVariableList();
+		// }
+		//  matchToken(VID_T, NO_ATTR);
+		hdr_int controlT = 0;
+		while(lookahead.code != EOS_T && controlT != 200){
+			if(lookahead.code == INL_T){
+				matchToken(INL_T,NO_ATTR);
+				printf("hdr: integer parsed\n");
+			}
+			else if(lookahead.code == STR_T){
+				matchToken(STR_T,NO_ATTR);
+				printf("hdr: string operator parsed\n");
+			}
+			else if(lookahead.code == ART_T){
+				matchToken(ART_T,NO_ATTR);
+				printf("hdr: Arithmetic operator pased\n");
+			}else if(lookahead.code == VID_T){
+				matchToken(VID_T,NO_ATTR);
+				printf("hdr: Vairable parsed\n");
+			}
+			controlT += 1;
+		}
+
+		if(controlT == 200) printError();
+		matchToken(EOS_T,NO_ATTR);
 		printf("%s%s\n",STR_LANGNAME,": Assignment statment parsed");
 	break;
 

@@ -1,6 +1,6 @@
 Name: Hasibullah Yosufi/Palwinder
 
-st#: 041012318
+
 
 github Repository link to clone: https://github.com/Khesorw/Compilers_VS_Code.git
 repos is public 
