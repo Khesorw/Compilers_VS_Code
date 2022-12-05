@@ -499,6 +499,7 @@ Token funcKEY(hdr_char lexeme[]) {
 			kwindex = j;
 	if (kwindex != -1) {
 		currentToken.code = KW_T;
+
 		currentToken.attribute.codeType = kwindex;
 	}
 	else {

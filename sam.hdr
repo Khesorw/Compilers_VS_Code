@@ -1,2 +1,9 @@
+main: {
+
+
 a = b
+print("asd")
+}
+
+
 

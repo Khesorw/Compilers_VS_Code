@@ -184,21 +184,27 @@ hdr_void program() {
 			codeSession();
 			break;
 		}
+		else if(!strncmp(lookahead.attribute.idLexeme, LANG_MAIN, 5) == 0){
+			codeSession();
+			break;
+		}
+
 		else {
 			printError();
 		}
+
+		
 	
 	case STR_T:
 
 	;
 	break;
 	case VID_T:
-		matchToken(VID_T, NO_ATTR);
-		matchToken(ASSIN_T, NO_ATTR);
-		matchToken(VID_T, NO_ATTR);
+		statements();
 
 	break;
 
+	
 	
 	case SEOF_T:
 		; // Empty
@@ -253,6 +259,9 @@ hdr_void codeSession() {
 matchToken(MNID_T,NO_ATTR);
 matchToken(LBR_T,NO_ATTR);
 statement();
+if(lookahead.code != RBR_T){
+	statement();
+}
 matchToken(RBR_T,NO_ATTR);
 printf("HDR_Implemention: Implemention Parsed\n");
 
@@ -329,11 +338,13 @@ hdr_void statementsPrime() {
  */
 hdr_void statement() {
 	switch (lookahead.code) {
+
 	case KW_T:
-		switch (lookahead.attribute.codeType) {
-		default:
-			printError();
-		}
+	
+		outputStatement();
+		printf("hdr: keyword parsed\n");
+
+		
 	break;
 	case MNID_T:
 		if (strncmp(lookahead.attribute.idLexeme, LANG_WRTE, 6) == 0) {
@@ -350,13 +361,17 @@ hdr_void statement() {
 		matchToken(VID_T, NO_ATTR);
 		matchToken(ASSIN_T, NO_ATTR);
 		matchToken(VID_T, NO_ATTR);
+		printf("%s%s\n",STR_LANGNAME,": Assignment statment parsed");
 	break;
+
+	
 
 	case RBR_T:
 		printf("empty_function parsed:\n");
 
 	break;
 
+	
 		
 
 
@@ -374,12 +389,13 @@ hdr_void statement() {
  * FIRST(<output statement>) = { MNID_T(print&) }
  ***********************************************************
  */
-hdr_void outputStatement() {
-	matchToken(MNID_T, NO_ATTR);
+ hdr_void outputStatement() {
+	lookahead.attribute.codeType = PRINT;
+	matchToken(KW_T, PRINT);
 	matchToken(LPR_T, NO_ATTR);
 	outputVariableList();
 	matchToken(RPR_T, NO_ATTR);
-	matchToken(EOS_T, NO_ATTR);
+	//matchToken(EOS_T, NO_ATTR);
 	printf("%s%s\n", STR_LANGNAME, ": Output statement parsed");
 }
 
@@ -394,6 +410,12 @@ hdr_void outputVariableList() {
 	switch (lookahead.code) {
 	case STR_T:
 		matchToken(STR_T, NO_ATTR);
+		printf("hdr: string var list parsed\n");
+		break;
+	case INL_T:
+		matchToken(INL_T,NO_ATTR);
+		printf("hdr: Integer var parsed\n");
+		
 		break;
 	default:
 		;
